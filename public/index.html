@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Context Graph Demo</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Noto+Sans+KR:wght@400;500;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/styles.css" />
+    <script src="https://unpkg.com/cytoscape@3.30.2/dist/cytoscape.min.js"></script>
+  </head>
+  <body>
+    <main class="shell">
+      <section class="hero">
+        <div class="hero-copy">
+          <p class="eyebrow">Neo4j Context Graph Playground</p>
+          <h1>Android context에서<br />의사결정을 시뮬레이션</h1>
+          <p class="lede">
+            더미 모바일 context data를 그래프로 적재하고, `YouTube 실행`과
+            `sharesheet 호출` 시점에 noise erase와 share ranking을 어떻게
+            조정할지 실험합니다.
+          </p>
+          <div class="hero-actions">
+            <button id="seedButton" class="primary">Seed Demo Graph</button>
+            <button id="refreshButton" class="secondary">Refresh Status</button>
+          </div>
+          <div id="healthBanner" class="banner">Neo4j 상태를 확인 중입니다.</div>
+        </div>
+        <div class="hero-metrics">
+          <div>
+            <span>Primary event</span>
+            <strong>YouTube Launch / Sharesheet</strong>
+          </div>
+          <div>
+            <span>Decision outputs</span>
+            <strong>Noise erase, direct share, app ordering</strong>
+          </div>
+          <div>
+            <span>Modeling style</span>
+            <strong>User ↔ Context ↔ Event ↔ Target graph</strong>
+          </div>
+        </div>
+      </section>
+
+      <section class="workspace">
+        <div class="controls-panel">
+          <div class="controls-header">
+            <h2>Simulation Controls</h2>
+            <p>시나리오와 이벤트를 바꾸면서 결과 변화를 바로 확인합니다.</p>
+          </div>
+          <label class="field">
+            <span>Scenario</span>
+            <select id="scenarioSelect"></select>
+          </label>
+          <label class="field">
+            <span>Event</span>
+            <select id="eventSelect">
+              <option value="youtube_launch">YouTube Launch</option>
+              <option value="sharesheet_open">Sharesheet Open</option>
+            </select>
+          </label>
+          <button id="simulateButton" class="primary wide">Run Simulation</button>
+
+          <div id="scenarioCard" class="scenario-card"></div>
+        </div>
+
+        <div class="results-panel">
+          <div class="section-head">
+            <h2>Decision Output</h2>
+            <p>Neo4j query 결과와 규칙 기반 점수를 함께 표시합니다.</p>
+          </div>
+
+          <div id="decisionGrid" class="decision-grid">
+            <article class="decision-card accent">
+              <h3>Noise Erase</h3>
+              <div id="noiseDecision"></div>
+            </article>
+            <article class="decision-card">
+              <h3>Direct Share Ranking</h3>
+              <div id="directShareList"></div>
+            </article>
+            <article class="decision-card">
+              <h3>App Ordering</h3>
+              <div id="appRankingList"></div>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="graph-section">
+        <div class="section-head">
+          <h2>Context Graph</h2>
+          <p>선택한 시나리오 주변의 노드와 관계를 시각화합니다.</p>
+        </div>
+        <div id="graph"></div>
+      </section>
+    </main>
+
+    <script src="/app.js"></script>
+  </body>
+  </html>
